@@ -22,7 +22,7 @@ public class Practice {
                     c == '}' && stack.pop() != '{') {
                     return false;
             }
-            else if(c == ''){
+            else if(c == ')'){
                 stack.push(c);
             }
         }

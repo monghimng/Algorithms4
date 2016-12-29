@@ -61,6 +61,10 @@ public class Stack<T> implements Iterable<T>{
         n++;
     }
 
+    public T peek(){
+        return head.data;
+    }
+
     public T pop(){
         T poped = head.data;
         head = head.next;
