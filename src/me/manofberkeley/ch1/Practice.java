@@ -1,5 +1,7 @@
 package me.manofberkeley.ch1;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -7,6 +9,18 @@ import java.util.Scanner;
  */
 public class Practice {
     public static void main(String[] args){
+        int[] a = new int[5];
+        //a = {1,2,3};
+        int[] b = {1,2,3, 4};
+        b = new int[]{1, 2, 3};
+        Object o = b;
+        Number[] i = {112,2,3};
+        Integer[] c = Arrays.copyOf(i, i.length, Integer[].class);
+        Integer[] d = (Integer[])i;
+        List<Integer> lst = Arrays.asList(c);
+        boolean bbb = c.equals(d);
+
+
         Scanner scan = new Scanner(System.in);
         while(true){
             String expression = scan.nextLine();
@@ -22,7 +36,7 @@ public class Practice {
                     c == '}' && stack.pop() != '{') {
                     return false;
             }
-            else if(c == ''){
+            else if(c == ' '){
                 stack.push(c);
             }
         }
