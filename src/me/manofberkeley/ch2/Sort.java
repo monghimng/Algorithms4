@@ -13,8 +13,79 @@ public class Sort {
 //        }
 //        lst = new Integer[]{3,-1,0};
 //        lst = insertionSort(lst);
-        lst = shellSort(lst);
+//        lst = shellSort(lst);
+//        buffer = new Integer[lst.length]; lst = topDownMergeSort(lst, 0, lst.length);
+//        lst = bottomUpMergeSort(lst);
+
+        lst = quickSort(lst, 0, lst.length);
         printLst(lst);
+    }
+
+    public static Comparable[] quickSort(Comparable[] lst, int low, int high){
+        if(high - low > 2){
+            int mid = partition(lst, low, high);
+            quickSort(lst, low, mid);
+            quickSort(lst, mid+1, high);
+        }
+        return lst;
+    }
+
+    public static int partition(Comparable[] lst, int low, int high){
+        Comparable pivot = lst[low];
+        int i = low, j = high;
+        while(true){
+            while(lst[++i].compareTo(pivot) <= 0) if(i == high - 1) break;
+            while(lst[--j].compareTo(pivot) >= 0) if(j == low) break;
+            if(i >= j) break;
+            Comparable temp = lst[i];
+            lst[i] = lst[j];
+            lst[j] = temp;
+        }
+        lst[low] = lst[j];
+        lst[j] = pivot;
+        return j;
+    }
+
+    public static Comparable[] buffer;
+
+    public static Comparable[] bottomUpMergeSort(Comparable[] lst){
+        buffer = new Comparable[lst.length];
+        for(int pow2 = 1; pow2 < lst.length; pow2 *= 2){
+            for(int i = 0; i + pow2 < lst.length; i += 2 * pow2){
+                merge(lst, i, i + pow2, Math.min(i + 2 * pow2, lst.length));
+            }
+        }
+        return lst;
+    }
+
+    public static Comparable[] topDownMergeSort(Comparable[] lst, int low, int high) {
+        //high is exclusive
+        int mid = (high + low) / 2;
+        if(high - low > 2) {
+            topDownMergeSort(lst, low, mid);
+            topDownMergeSort(lst, mid, high);
+        }
+        merge(lst, low, mid, high);
+        return lst;
+    }
+
+    public static void merge(Comparable[] lst, int low, int mid, int high){
+        //high inclusive
+        for(int i = low; i < high; i++) {
+            buffer[i] = lst[i];
+        }
+        int first = low;
+        int second = mid;
+        for(int i = low; i < high; i++){
+            if(first >= mid) lst[i] = buffer[second++];
+            else if(second >= high) lst[i] = buffer[first++];
+            else if(buffer[first].compareTo(buffer[second]) <= 0){
+                lst[i] = buffer[first++];
+            }
+            else{
+                lst[i] = buffer[second++];
+            }
+        }
     }
 
     public static Comparable[] shellSort(Comparable[] lst){
